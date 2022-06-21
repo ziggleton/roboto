@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Canvas from '../canvas/Canvas';
+import CommandCenter from '../command-center/CommandCenter';
 import './app.css';
 
 const AppWrapper = styled.div`
@@ -12,39 +13,28 @@ const AppWrapper = styled.div`
   position: relative;
 `;
 
-const CommandCenter = styled.section`
-  height: 100%;
-  width: 20%;
-  min-width: 250px;
-`;
-
 const Terrain = styled.section`
   flex: 1;
 `;
 
 const App = () => {
-  const [test, setTest] = useState(null);
-
-  const animate = () => {
-    // this function helps wit smooth animation of the robot.
-    window.requestAnimationFrame(animate);
-    console.log('go');
+  const [cmd, setCmd] = useState(null);
+  const assignComand = (value) => {
+    setCmd(value);
   };
 
   useEffect(() => {
-    setTest('fuck you anny');
-    if (test) {
-      console.log(test);
-      // animate();
+    if (cmd) {
+      console.log(cmd);
     }
-  }, [test]);
+  }, [cmd]);
 
   return (
     <AppWrapper>
       <Terrain>
-        <Canvas />
+        <Canvas cmd={cmd} />
       </Terrain>
-      <CommandCenter></CommandCenter>
+      <CommandCenter callback={assignComand} />
     </AppWrapper>
   );
 };
