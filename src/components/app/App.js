@@ -13,28 +13,42 @@ const AppWrapper = styled.div`
   position: relative;
 `;
 
-const Terrain = styled.section`
+const Table = styled.section`
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const App = () => {
   const [cmd, setCmd] = useState(null);
+  const tableDimentions = {
+    height: 50,
+    width: 50,
+  };
   const assignComand = (value) => {
     setCmd(value);
   };
 
+  const drawCanvas = (ctx) => {
+    ctx.fillStyle = 'black';
+    ctx.canvas.width = tableDimentions.width * 10;
+    ctx.canvas.height = tableDimentions.height * 10;
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  };
+
   useEffect(() => {
     if (cmd) {
-      console.log(cmd);
+      console.log('i have changes', cmd);
     }
   }, [cmd]);
 
   return (
     <AppWrapper>
-      <Terrain>
-        <Canvas cmd={cmd} />
-      </Terrain>
-      <CommandCenter callback={assignComand} />
+      <Table>
+        <Canvas command={cmd} draw={drawCanvas} />
+      </Table>
+      <CommandCenter setCommand={assignComand} />
     </AppWrapper>
   );
 };
