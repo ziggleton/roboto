@@ -1,0 +1,9 @@
+{
+  "name": "roboto",
+  "version": "1.0.0",
+  "description": "front-end toy robot challenge",
+  "main": "index.js",
+  "repository": "git@github.com:ziggleton/roboto.git",
+  "author": "Nkhatho Ziggy Mahlomaholo <ziggleton@icloud.com>",
+  "license": "MIT"
+}
