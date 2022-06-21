@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Canvas from '../canvas/Canvas';
 import './app.css';
@@ -24,19 +24,25 @@ const Terrain = styled.section`
 
 const App = () => {
   const [test, setTest] = useState(null);
-  const ref = useRef(null);
+
+  const animate = () => {
+    // this function helps wit smooth animation of the robot.
+    window.requestAnimationFrame(animate);
+    console.log('go');
+  };
 
   useEffect(() => {
     setTest('fuck you anny');
     if (test) {
       console.log(test);
+      // animate();
     }
-  }, [test, ref]);
+  }, [test]);
 
   return (
     <AppWrapper>
       <Terrain>
-        <Canvas ref={ref} />
+        <Canvas />
       </Terrain>
       <CommandCenter></CommandCenter>
     </AppWrapper>
