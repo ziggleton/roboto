@@ -3,38 +3,45 @@ import Robot from '../robot/Robot';
 import { getCommandObject } from '../../lib';
 import { useRef, useEffect } from 'react';
 
-const Canvas = ({ command, draw }) => {
+const Canvas = ({ command, height, width }) => {
   const canvasref = useRef(null);
   const robot = useRef(null);
   const context = useRef(null);
   const cmd = useRef(null);
+  const canvas = useRef(null);
 
   useEffect(() => {
     // get canvas context
-    const canvas = canvasref.current;
-    context.value = canvas.getContext('2d');
-    // draw the canvas on the screen
-    if (!context.value) return;
-    draw(context.value);
-    // get commandObject from the command
-    if (!command) return;
-    cmd.value = getCommandObject(command);
-    if (!cmd.value) return;
-    if (cmd.value.trigger === 'PLACE' && !robot.value) {
-      robot.value = new Robot({ context: context.value, cmd: cmd.value });
-    }
-    if (!robot.value) return;
-    robot.value.command = { ...cmd.value };
+    canvas.current = canvasref.current;
+    context.current = canvas.current.getContext('2d');
+    if (!context.current) return;
+    clearCanvas();
+
     const animateRobot = () => {
-      window.requestAnimationFrame(animateRobot);
-      context.value.fillStyle = 'black';
-      context.value.fillRect(0, 0, canvas.width, canvas.height);
-      robot.value._UPDATE();
+      requestAnimationFrame(animateRobot);
+      clearCanvas();
+      robot.current.rDegrees = null;
+      robot.current.velocity = null;
+      robot.current.command = { ...cmd.current };
+      robot.current._UPDATE();
     };
 
-    animateRobot();
-  }, [draw, command]);
+    if (!command) return;
+    // get commandObject from the command
+    cmd.current = getCommandObject(command);
 
-  return <canvas id='terrain' ref={canvasref} />;
+    if (!cmd.current) return;
+    if (!robot.current && cmd.current.trigger === 'PLACE') {
+      robot.current = new Robot({ context: context.current, cmd: cmd.current });
+    }
+    animateRobot();
+  }, [command]);
+
+  const clearCanvas = () => {
+    context.current.fillStyle = '#7DCEA0';
+    context.current.fillRect(0, 0, canvas.current.width, canvas.current.height);
+  };
+
+  return <canvas id='terrain' ref={canvasref} height={height} width={width} />;
 };
 export default Canvas;
