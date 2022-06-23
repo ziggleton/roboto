@@ -5,7 +5,7 @@ const actionType = new RegExp(/^(LEFT|RIGHT|REPORT|MOVE|STOP)/);
 
 const getCommandObject = (cmdString) => {
   let obj = {
-    trigger: 'PLACE',
+    trigger: null,
     position: {
       x: null,
       y: null,
@@ -44,8 +44,6 @@ const getCommandObject = (cmdString) => {
           obj.orientation.bearing = secondaryArr[2];
           break;
         default:
-          obj.orientation.deg = 360;
-          obj.orientation.bearing = 'NORTH';
           break;
       }
     }
@@ -56,7 +54,6 @@ const getCommandObject = (cmdString) => {
   } else {
     obj = null;
   }
-
   return obj;
 };
 
