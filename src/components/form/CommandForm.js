@@ -44,7 +44,7 @@ const CommandForm = ({ callback }) => {
       cmdInput.value = null;
       toggleInput();
       cmdInput.focus();
-    }, 10);
+    });
   };
 
   return (
