@@ -22,31 +22,20 @@ const Table = styled.section`
 
 const App = () => {
   const [cmd, setCmd] = useState(null);
-  const tableDimentions = {
-    height: 50,
-    width: 50,
-  };
   const assignComand = (value) => {
     setCmd(value);
   };
 
-  const drawCanvas = (ctx) => {
-    ctx.fillStyle = 'black';
-    ctx.canvas.width = tableDimentions.width * 10;
-    ctx.canvas.height = tableDimentions.height * 10;
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  };
-
   useEffect(() => {
     if (cmd) {
-      console.log('i have changes', cmd);
+      console.log('Command Update:', cmd);
     }
   }, [cmd]);
 
   return (
     <AppWrapper>
       <Table>
-        <Canvas command={cmd} draw={drawCanvas} />
+        <Canvas command={cmd} height={500} width={500} />
       </Table>
       <CommandCenter setCommand={assignComand} />
     </AppWrapper>
