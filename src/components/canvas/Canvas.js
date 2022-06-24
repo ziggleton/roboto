@@ -16,7 +16,11 @@ const Canvas = ({ command, height, width }) => {
     context.current = canvas.current.getContext('2d');
     if (!context.current) return;
     clearCanvas();
+    if (!command) return;
+    // get commandObject from the command
+    cmd.current = getCommandObject(command);
 
+    if (!cmd.current) return;
     const animateRobot = () => {
       requestAnimationFrame(animateRobot);
       clearCanvas();
@@ -26,14 +30,11 @@ const Canvas = ({ command, height, width }) => {
       robot.current._UPDATE();
     };
 
-    if (!command) return;
-    // get commandObject from the command
-    cmd.current = getCommandObject(command);
-
     if (!cmd.current) return;
     if (!robot.current && cmd.current.trigger === 'PLACE') {
       robot.current = new Robot({ context: context.current, cmd: cmd.current });
     }
+
     animateRobot();
   }, [command]);
 

@@ -30,6 +30,7 @@ const CommandForm = ({ callback }) => {
   }, []);
 
   const toggleInput = () => {
+    if(!cmdInput.value) return;
     setDisabled(
       cmdInput.value === '' || cmdInput.value === null ? 'disabled' : ''
     );

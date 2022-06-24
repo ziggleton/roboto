@@ -4,8 +4,8 @@ export default class Robot {
     this.command = cmd;
     this.position = cmd.position;
     this.orientation = cmd.orientation;
-    this.width = 20;
-    this.height = 20;
+    this.width = 64;
+    this.height = 64;
     this.velocity = 5;
     this.degrees = null;
     this.compas = [
